@@ -1,0 +1,97 @@
+<!doctype html>
+<html>
+
+<head>
+    <title>Flask App</title>
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.13.0/themes/base/jquery-ui.css">
+    <script src="//code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="//code.jquery.com/ui/1.13.0/jquery-ui.min.js"></script>
+
+    <style>
+        #slider {
+            width: 5cm;
+            height: 10px;
+        }
+
+        #slider-value {
+            margin-top: 10px;
+            font-size: 1.2em;
+            text-align: left;
+        }
+
+        .image-container {
+            display: flex;
+            justify-content: flex-start;
+            margin: 10px 0 0 20px;
+        }
+
+        .image-container img {
+            margin-right: 10px;
+            width: 250px;
+            height: auto;
+        }
+
+        .image-container .title {
+            margin-top: 5px;
+            font-weight: bold;
+            text-align: center;
+        }
+    </style>
+
+</head>
+
+<body>
+    <h2>Binary Image</h2>
+
+    <form method="post" action="/">
+        <button type="submit">START</button>
+    </form>
+
+    <br><br>
+    <div id="slider"></div>
+    <input type="hidden" name="thres" id="thres_val">
+    <div id="slider-value">0</div>
+
+
+    <script>
+        $(function() {
+    // sliderの初期化とイベントリスナーの設定
+    var slider = $("#slider");
+        var output = $("#slider-value");
+        var thres_val = $("#thres_val");
+        slider.slider({
+            min: 0,
+        max: 25,
+        value: 0,
+        slide: function(event, ui) {
+            output.text(ui.value);
+        thres_val.val(ui.value);
+        var title = $(".title:last");
+        title.text("Binary Image " + ui.value);
+        var binary_img = $("#binary_img");
+        binary_img.attr("src", "../static/" + ui.value + "_img.png");
+      }
+    });
+        output.text(slider.slider("value"));
+    });
+    </script>
+
+    <br><br>
+    <div class="image-container">
+        <div>
+            <img src="../static/sample.png" alt="Original Image">
+            <div class="title">Original Image</div>
+        </div>
+        <div>
+            <img src="../static/gray_img.png" alt="Gray Image">
+            <div class="title">Gray Image</div>
+        </div>
+        <div>
+            <img id="binary_img" src="../static/0_img.png" alt="Binary Image">
+            <div class="title">Gray Image 0</div>
+        </div>
+    </div>
+
+</body>
+
+</html>
